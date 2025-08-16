@@ -1,0 +1,127 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// =======================
+// User Model
+// =======================
+model User {
+  user_id         String    @id @default(cuid())
+  name            String
+  email           String    @unique
+  password        String
+  phone           String
+  gov_id_type     GovIdType
+  gov_id_no       String    @unique
+  role            Role
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  hoardings       Hoarding[]      @relation("OwnerHoardings")
+  advertisements  Advertisement[] @relation("AdvertiserAds")
+}
+
+enum Role {
+  ADMIN
+  OWNER
+  ADVERTISER
+}
+
+enum GovIdType {
+  AADHAR
+  PAN
+}
+
+// =======================
+// Hoarding Model
+// =======================
+model Hoarding {
+  hoarding_no       String                               @id @default(cuid())
+  ownerId           String
+  owner             User                                 @relation("OwnerHoardings", fields: [ownerId], references: [user_id])
+  height            Float
+  width             Float
+  installation_date DateTime
+  location          Unsupported("geography(Point,4326)") 
+  address           String?
+  isAvailable       Boolean                              @default(true) 
+  createdAt         DateTime                             @default(now())
+  updatedAt         DateTime                             @updatedAt
+
+  advertisement     HoardingAdvertisement?
+}
+
+// =======================
+// Advertisement Model
+// =======================
+model Advertisement {
+  advertise_no    String                  @id @default(cuid())
+  advertiserId    String
+  advertiser      User                    @relation("AdvertiserAds", fields: [advertiserId], references: [user_id])
+  title           String
+  description     String
+  category        String
+  contentUrl      String?
+  approved        Boolean                 @default(true)
+  createdAt       DateTime                @default(now())
+  updatedAt       DateTime                @updatedAt
+
+  hoardings       HoardingAdvertisement[]
+}
+
+// =======================
+// HoardingAdvertisement
+// =======================
+model HoardingAdvertisement {
+  id              String        @id @default(cuid())
+  hoardingId      String        @unique
+  advertisementId String
+  hoarding        Hoarding      @relation(fields: [hoardingId], references: [hoarding_no])
+  advertisement   Advertisement @relation(fields: [advertisementId], references: [advertise_no])
+
+  qrCodeNo        String?       @unique
+  startDate       DateTime
+  endDate         DateTime
+  createdAt       DateTime      @default(now())
+}
+
+// =======================
+// Report Model
+// =======================
+model Report {
+  report_no     String                               @id @default(cuid())
+  qrCodeNo      String?
+  reporterPhone String
+  issueType     ReportType
+  description   String
+  imageUrl      String?
+  location      Unsupported("geography(Point,4326)") 
+  status        ReportStatus                         @default(PENDING)
+  createdAt     DateTime                             @default(now())
+}
+
+enum ReportType {
+  NO_QR
+  BANNED_CONTENT
+  ILLEGAL_INSTALLATION
+  STRUCTURAL_HAZARD
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  ACTION_TAKEN
+}
