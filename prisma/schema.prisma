@@ -19,19 +19,19 @@ datasource db {
 // User Model
 // =======================
 model User {
-  user_id         String    @id @default(cuid())
-  name            String
-  email           String    @unique
-  password        String
-  phone           String
-  gov_id_type     GovIdType
-  gov_id_no       String    @unique
-  role            Role
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  user_id     String    @id @default(cuid())
+  name        String
+  email       String    @unique
+  password    String
+  phone       String
+  gov_id_type GovIdType
+  gov_id_no   String    @unique
+  role        Role
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
-  hoardings       Hoarding[]      @relation("OwnerHoardings")
-  advertisements  Advertisement[] @relation("AdvertiserAds")
+  hoardings      Hoarding[]      @relation("OwnerHoardings")
+  advertisements Advertisement[] @relation("AdvertiserAds")
 }
 
 enum Role {
@@ -55,31 +55,31 @@ model Hoarding {
   height            Float
   width             Float
   installation_date DateTime
-  location          Unsupported("geography(Point,4326)") 
+  location          Unsupported("geography(Point,4326)")?
   address           String?
-  isAvailable       Boolean                              @default(true) 
+  isAvailable       Boolean                              @default(true)
   createdAt         DateTime                             @default(now())
   updatedAt         DateTime                             @updatedAt
 
-  advertisement     HoardingAdvertisement?
+  advertisement HoardingAdvertisement?
 }
 
 // =======================
 // Advertisement Model
 // =======================
 model Advertisement {
-  advertise_no    String                  @id @default(cuid())
-  advertiserId    String
-  advertiser      User                    @relation("AdvertiserAds", fields: [advertiserId], references: [user_id])
-  title           String
-  description     String
-  category        String
-  contentUrl      String?
-  approved        Boolean                 @default(true)
-  createdAt       DateTime                @default(now())
-  updatedAt       DateTime                @updatedAt
+  advertise_no String   @id @default(cuid())
+  advertiserId String
+  advertiser   User     @relation("AdvertiserAds", fields: [advertiserId], references: [user_id])
+  title        String
+  description  String
+  category     String
+  contentUrl   String?
+  approved     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  hoardings       HoardingAdvertisement[]
+  hoardings HoardingAdvertisement[]
 }
 
 // =======================
@@ -92,10 +92,10 @@ model HoardingAdvertisement {
   hoarding        Hoarding      @relation(fields: [hoardingId], references: [hoarding_no])
   advertisement   Advertisement @relation(fields: [advertisementId], references: [advertise_no])
 
-  qrCodeNo        String?       @unique
-  startDate       DateTime
-  endDate         DateTime
-  createdAt       DateTime      @default(now())
+  qrCodeNo  String?  @unique
+  startDate DateTime
+  endDate   DateTime
+  createdAt DateTime @default(now())
 }
 
 // =======================
@@ -108,7 +108,7 @@ model Report {
   issueType     ReportType
   description   String
   imageUrl      String?
-  location      Unsupported("geography(Point,4326)") 
+  location      Unsupported("geography(Point,4326)")?
   status        ReportStatus                         @default(PENDING)
   createdAt     DateTime                             @default(now())
 }
