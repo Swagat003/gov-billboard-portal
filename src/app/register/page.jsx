@@ -271,7 +271,7 @@ function RegisterForm() {
                                     </p>
                                 </div>
 
-]                                <div className="space-y-2">
+                              <div className="space-y-2">
                                     <Label htmlFor="password" className="text-blue-900 font-semibold flex items-center space-x-2">
                                         <Lock className="w-4 h-4" />
                                         <span>Password <span className="text-red-500">*</span></span>
@@ -304,7 +304,7 @@ function RegisterForm() {
                                     </p>
                                 </div>
 
-]                                <div className="space-y-2">
+                                <div className="space-y-2">
                                     <Label htmlFor="confirmPassword" className="text-blue-900 font-semibold flex items-center space-x-2">
                                         <Lock className="w-4 h-4" />
                                         <span>Confirm Password <span className="text-red-500">*</span></span>
@@ -336,7 +336,7 @@ function RegisterForm() {
                                     )}
                                 </div>
 
-]                                <div className="space-y-4">
+                               <div className="space-y-4">
                                     <div className="flex items-start space-x-2">
                                         <input
                                             type="checkbox"
@@ -370,7 +370,7 @@ function RegisterForm() {
                                     </div>
                                 </div>
 
-]                                <div className="pt-4">
+                                <div className="pt-4">
                                     <Button
                                         type="submit"
                                         className="w-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white py-3 text-lg font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
