@@ -3,7 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
+@theme inline
+{
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -43,7 +44,8 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-:root {
+:root
+{
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -78,7 +80,8 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
+.dark
+{
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -112,11 +115,89 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
-@layer base {
-  * {
+@layer base
+{
+  *
+  {
     @apply border-border outline-ring/50;
   }
-  body {
+
+  body
+  {
     @apply bg-background text-foreground;
   }
+}
+
+.gov-gradient
+{
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+}
+
+.tricolor-border
+{
+  border-top: 3px solid #ff9933;
+  border-bottom: 3px solid #138808;
+}
+
+.ashok-chakra
+{
+  position: relative;
+}
+
+.ashok-chakra::before
+{
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  background: radial-gradient(circle, #000080 30%, transparent 30%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.hover-lift
+{
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover
+{
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+html
+{
+  scroll-behavior: smooth;
+}
+
+.btn-gov-primary
+{
+  background: linear-gradient(135deg, #ff9933 0%, #ff6b35 100%);
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-gov-primary:hover
+{
+  background: linear-gradient(135deg, #ff6b35 0%, #ff4500 100%);
+  transform: translateY(-2px);
+}
+
+.btn-gov-secondary
+{
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+  border: 2px solid #ffffff;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.btn-gov-secondary:hover
+{
+  background: white;
+  color: #1e3a8a;
+  transform: translateY(-2px);
 }

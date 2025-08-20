@@ -12,8 +12,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Gov Billboard Portal",
-  description: "A platform for government billboard management",
+  title: "Government Billboard Portal | Ministry of Urban Development",
+  description: "Official digital platform for billboard advertising management across India. Transparent, efficient, and accessible outdoor advertising solutions under Digital India initiative.",
+  keywords: "government, billboard, advertising, India, digital platform, urban development",
 };
 
 export default function RootLayout({ children }) {
