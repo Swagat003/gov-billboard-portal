@@ -43,10 +43,52 @@ function RegisterForm() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        
+        console.log("Form submission started");
+        console.log("Form data being sent:", formData);
+        
+        // Validate required fields
+        const requiredFields = ['name', 'email', 'registeringAs', 'phone', 'govIdType', 'govIdNo', 'password'];
+        const missingFields = requiredFields.filter(field => !formData[field]);
+        
+        if (missingFields.length > 0) {
+            alert(`❌ Please fill in all required fields: ${missingFields.join(', ')}`);
+            return;
+        }
+        
+        if (formData.password !== formData.confirmPassword) {
+            alert("❌ Passwords do not match");
+            return;
+        }
+        
+        try {
+            const res = await fetch("/api/auth/register", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            console.log("Response status:", res.status);
+            const data = await res.json();
+            console.log("Response data:", data);
+            
+            if (res.ok) {
+                alert("✅ Registered successfully!");
+                console.log("User:", data.user);
+                // Optionally redirect to login page
+                // window.location.href = "/login";
+            } else {
+                alert("❌ " + data.error);
+                console.error("Registration failed:", data);
+            }
+        } catch (error) {
+            console.error("Network error:", error);
+            alert("❌ Network error occurred");
+        }
     };
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">
@@ -271,7 +313,7 @@ function RegisterForm() {
                                     </p>
                                 </div>
 
-                              <div className="space-y-2">
+                                <div className="space-y-2">
                                     <Label htmlFor="password" className="text-blue-900 font-semibold flex items-center space-x-2">
                                         <Lock className="w-4 h-4" />
                                         <span>Password <span className="text-red-500">*</span></span>
@@ -336,7 +378,7 @@ function RegisterForm() {
                                     )}
                                 </div>
 
-                               <div className="space-y-4">
+                                <div className="space-y-4">
                                     <div className="flex items-start space-x-2">
                                         <input
                                             type="checkbox"
