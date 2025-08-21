@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -6,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Building2, Users, MapPin, Shield, TrendingUp, Clock } from "lucide-react";
 
 export default function Home() {
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       {/* Header */}

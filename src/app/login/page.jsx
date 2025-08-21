@@ -25,10 +25,37 @@ function LoginPage() {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Login form submitted:', formData);
+
+        try {
+            const res = await fetch("/api/auth/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: formData.email,
+                    password: formData.password,
+                    loginAs: formData.loginAs,
+                }),
+            });
+
+            const data = await res.json();
+
+            if (!res.ok) {
+                alert("❌ " + data.error);
+                return;
+            }
+
+
+            // Trigger auth context to update user state
+            window.location.reload(); // Force reload to trigger auth check
+        } catch (err) {
+            console.error("Login error:", err);
+            alert("Server error. Try again later.");
+        }
     };
+
+
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50">

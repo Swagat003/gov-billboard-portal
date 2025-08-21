@@ -46,10 +46,6 @@ function RegisterForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        console.log("Form submission started");
-        console.log("Form data being sent:", formData);
-        
-        // Validate required fields
         const requiredFields = ['name', 'email', 'registeringAs', 'phone', 'govIdType', 'govIdNo', 'password'];
         const missingFields = requiredFields.filter(field => !formData[field]);
         
@@ -70,15 +66,11 @@ function RegisterForm() {
                 body: JSON.stringify(formData),
             });
 
-            console.log("Response status:", res.status);
             const data = await res.json();
-            console.log("Response data:", data);
             
             if (res.ok) {
                 alert("✅ Registered successfully!");
-                console.log("User:", data.user);
-                // Optionally redirect to login page
-                // window.location.href = "/login";
+                window.location.href = "/login";
             } else {
                 alert("❌ " + data.error);
                 console.error("Registration failed:", data);
