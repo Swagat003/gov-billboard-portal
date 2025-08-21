@@ -48,17 +48,18 @@ enum GovIdType {
 // Hoarding Model
 // =======================
 model Hoarding {
-  hoarding_no       String                               @id @default(cuid())
+  hoarding_no       String   @id @default(cuid())
   ownerId           String
-  owner             User                                 @relation("OwnerHoardings", fields: [ownerId], references: [user_id])
+  owner             User     @relation("OwnerHoardings", fields: [ownerId], references: [user_id])
   height            Float
   width             Float
   installation_date DateTime
-  location          Unsupported("geography(Point,4326)")?
+  latitude          Float?
+  longitude         Float?
   address           String?
-  isAvailable       Boolean                              @default(true)
-  createdAt         DateTime                             @default(now())
-  updatedAt         DateTime                             @updatedAt
+  isAvailable       Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 
   advertisement HoardingAdvertisement?
 }
